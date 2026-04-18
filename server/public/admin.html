@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin dashboard for managing visitors, leads, courses, categories, and analytics.">
+  <title>Admin Dashboard | AdmissionPro</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <section id="loginSection" class="admin-login reveal">
+      <a class="brand admin-login-brand" href="index.html">Admission<span>Pro</span></a>
+      <div class="section-heading compact">
+        <p class="eyebrow">Admin access</p>
+        <h1>Login to dashboard</h1>
+        <p>Use username <strong>admin</strong> and password <strong>1234</strong>.</p>
+      </div>
+      <form id="loginForm" class="admin-card">
+        <label for="username">Username</label>
+        <input id="username" type="text" required placeholder="admin">
+        <label for="password">Password</label>
+        <input id="password" type="password" required placeholder="1234">
+        <button class="btn primary full" type="submit">Login</button>
+        <p id="loginMessage" class="form-message"></p>
+      </form>
+    </section>
+
+    <section id="dashboardSection" class="admin-dashboard hidden">
+      <aside class="sidebar">
+        <a class="brand" href="index.html">Admission<span>Pro</span></a>
+        <nav class="sidebar-menu">
+          <button class="sidebar-link active" type="button" data-target="dashboardPanel">Dashboard</button>
+          <button class="sidebar-link" type="button" data-target="analyticsPanel">Analytics</button>
+          <button class="sidebar-link" type="button" data-target="leadsPanel">Leads</button>
+          <button class="sidebar-link" type="button" data-target="coursesPanel">Courses</button>
+          <button class="sidebar-link" type="button" data-target="categoriesPanel">Categories</button>
+        </nav>
+        <button id="logoutBtn" class="btn secondary full" type="button">Logout</button>
+      </aside>
+
+      <div class="dashboard-main">
+        <header class="dashboard-topbar">
+          <div>
+            <p class="eyebrow">Admin dashboard</p>
+            <h1>Education admissions control center</h1>
+          </div>
+          <a class="btn secondary" href="index.html">View Website</a>
+        </header>
+
+        <section id="dashboardPanel" class="admin-panel active-panel">
+          <div class="stats-grid">
+            <article class="stat-card">
+              <span>Total Leads</span>
+              <strong id="totalLeads">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Total Visitors</span>
+              <strong id="totalVisitors">0</strong>
+            </article>
+            <article class="stat-card">
+              <span>Total Courses</span>
+              <strong id="totalCourses">0</strong>
+            </article>
+          </div>
+          <div class="admin-card dashboard-summary-card">
+            <p class="eyebrow">Quick analytics</p>
+            <h2>Track admission growth</h2>
+            <p>Open the Analytics section to view daily lead trends and course-wise lead performance.</p>
+            <button class="btn primary" type="button" data-open-panel="analyticsPanel">View Analytics</button>
+          </div>
+        </section>
+
+        <section id="analyticsPanel" class="admin-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Graph analytics</p>
+              <h2>Leads and visitor insights</h2>
+            </div>
+            <button id="refreshStatsBtn" class="btn secondary small" type="button">Refresh</button>
+          </div>
+          <div class="stats-grid compact-stats-grid">
+            <article class="stat-card small-stat-card">
+              <span>Total Leads</span>
+              <strong id="analyticsTotalLeads">0</strong>
+            </article>
+            <article class="stat-card small-stat-card">
+              <span>Total Visitors</span>
+              <strong id="analyticsTotalVisitors">0</strong>
+            </article>
+            <article class="stat-card small-stat-card">
+              <span>Total Courses</span>
+              <strong id="analyticsTotalCourses">0</strong>
+            </article>
+          </div>
+          <p id="analyticsMessage" class="form-message"></p>
+          <div class="chart-grid">
+            <article class="admin-card chart-card">
+              <div class="chart-heading">
+                <div>
+                  <p class="eyebrow">Last 30 days</p>
+                  <h3>Daily leads</h3>
+                </div>
+              </div>
+              <canvas id="dailyLeadsChart" height="160"></canvas>
+            </article>
+            <article class="admin-card chart-card">
+              <div class="chart-heading">
+                <div>
+                  <p class="eyebrow">Course performance</p>
+                  <h3>Course-wise leads</h3>
+                </div>
+              </div>
+              <canvas id="courseStatsChart" height="160"></canvas>
+            </article>
+          </div>
+        </section>
+
+        <section id="leadsPanel" class="admin-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Lead management</p>
+              <h2>All admission leads</h2>
+            </div>
+            <button id="refreshLeadsBtn" class="btn secondary small" type="button">Refresh</button>
+          </div>
+          <div class="table-toolbar">
+            <input id="leadSearchInput" type="search" placeholder="Search by name">
+            <select id="leadCourseFilter">
+              <option value="">All courses</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Mobile</th>
+                  <th>Course</th>
+                  <th>City</th>
+                  <th>IP</th>
+                  <th>Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody"></tbody>
+            </table>
+          </div>
+          <div id="leadsEmpty" class="empty-state hidden">No leads found.</div>
+        </section>
+
+        <section id="coursesPanel" class="admin-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Course management</p>
+              <h2>Add, edit, and delete courses</h2>
+            </div>
+            <button id="newCourseBtn" class="btn secondary small" type="button">New Course</button>
+          </div>
+          <div class="management-grid">
+            <form id="courseForm" class="admin-card compact-card">
+              <input id="courseIdInput" type="hidden">
+              <h3 id="courseFormTitle">Add course</h3>
+
+              <label for="courseTitleInput">Title</label>
+              <input id="courseTitleInput" type="text" required placeholder="Example: B.Tech Admission in MP">
+
+              <label for="courseSlugInput">Slug</label>
+              <input id="courseSlugInput" type="text" required placeholder="example-course-slug">
+
+              <label for="courseCategoryInput">Category</label>
+              <select id="courseCategoryInput" required>
+                <option value="General">General</option>
+              </select>
+
+              <label for="courseDescriptionInput">Description</label>
+              <textarea id="courseDescriptionInput" required rows="3" placeholder="Short SEO description"></textarea>
+
+              <label for="courseKeywordsInput">Keywords</label>
+              <input id="courseKeywordsInput" type="text" placeholder="B.Tech admission, engineering college, MP admission">
+
+              <label for="courseContentInput">Content</label>
+              <textarea id="courseContentInput" required rows="8" placeholder="<h2>Admission</h2><p>Write admission details...</p><h2>Eligibility</h2><p>Write eligibility details...</p><h2>Fees</h2><p>Write fee details...</p><h2>Colleges</h2><p>Write college details...</p><h2>Placement</h2><p>Write placement details...</p>"></textarea>
+
+              <div class="button-row">
+                <button id="saveCourseBtn" class="btn primary" type="submit">Save Course</button>
+                <button id="cancelEditBtn" class="btn secondary hidden" type="button">Cancel Edit</button>
+              </div>
+              <p id="courseMessage" class="form-message"></p>
+            </form>
+
+            <div class="admin-card compact-card">
+              <h3>Course list</h3>
+              <div class="table-wrap small-table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Slug</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coursesTableBody"></tbody>
+                </table>
+              </div>
+              <div id="coursesEmpty" class="empty-state hidden">No courses found.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="categoriesPanel" class="admin-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Category management</p>
+              <h2>Organize courses by category</h2>
+            </div>
+          </div>
+          <div class="management-grid category-grid">
+            <form id="categoryForm" class="admin-card compact-card">
+              <h3>Add category</h3>
+              <label for="categoryNameInput">Category name</label>
+              <input id="categoryNameInput" type="text" required placeholder="Medical, Management, Engineering, IT / Computer">
+              <button class="btn primary full" type="submit">Save Category</button>
+              <p id="categoryMessage" class="form-message"></p>
+            </form>
+            <div class="admin-card compact-card">
+              <h3>Categories</h3>
+              <div id="categoriesList" class="category-list"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

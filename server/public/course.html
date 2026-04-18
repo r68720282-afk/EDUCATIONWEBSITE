@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Course admission details and application form.">
+  <meta name="keywords" content="admission guidance, course admission, college admission">
+  <title>Course Admission | AdmissionPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar container">
+      <a class="brand" href="/index.html">Admission<span>Pro</span></a>
+      <div class="nav-links">
+        <a href="/index.html#courses">Courses</a>
+        <a href="/admin.html">Admin</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container course-page">
+    <section class="course-layout">
+      <article class="course-detail reveal">
+        <a class="back-link" href="/index.html#courses">Back to courses</a>
+        <p class="eyebrow">Course details</p>
+        <h1 id="courseTitle">Loading course...</h1>
+        <p id="courseDescription" class="course-description"></p>
+        <div id="courseContent" class="content-box"></div>
+        <section id="relatedCoursesSection" class="related-courses hidden">
+          <p class="eyebrow">Related courses</p>
+          <h2>Explore more admission options</h2>
+          <div id="relatedCourses" class="related-course-list"></div>
+        </section>
+      </article>
+
+      <aside class="apply-card reveal delay-1">
+        <p class="eyebrow">Apply now</p>
+        <h2>Request admission guidance</h2>
+        <form id="applyForm">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Enter your full name">
+
+          <label for="mobile">Mobile</label>
+          <input id="mobile" name="mobile" type="tel" required placeholder="Enter mobile number">
+
+          <label for="city">City</label>
+          <input id="city" name="city" type="text" required placeholder="Enter your city">
+
+          <label for="course">Course</label>
+          <input id="course" name="course" type="text" required readonly>
+
+          <button class="btn primary full" type="submit">Submit Application</button>
+          <p id="formMessage" class="form-message"></p>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/js/course.js"></script>
+</body>
+</html>
